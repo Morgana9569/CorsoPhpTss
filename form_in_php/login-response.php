@@ -18,7 +18,7 @@ echo "<strong>". $_POST['email']."</strong>";*/
  * 
  */
 
-$test = filter_input(INPUT_GET, "email", FILTER_VALIDATE_EMAIL);
+$test = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);
 
 if($test==false) {
     echo "\nla mail non è valida\n";
