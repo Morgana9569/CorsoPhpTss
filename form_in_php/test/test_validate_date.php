@@ -1,39 +1,53 @@
 <?php
 
+require "./form_in_php/class/validator/Validable.php";
 require "./form_in_php/class/validator/ValidateDate.php";
+
 
 $date = [
     [
-        'input' => '     ',
+        'input' => '24/10/1995 ',
+        'expected' => '24/10/1995'
+    ],
+    [
+        'input' => ' 24/10/1995 ',
+        'expected' => '24/10/1995'
+    ],
+    [
+        'input' => ' 24/10/1995',
+        'expected' => '24/10/1995'
+    ],
+    [
+        'input' => '32/10/1995',
         'expected' => false
     ],
     [
-        'input' => 'dd/mm/yyyy ',
-        'expected' => 'dd/mm/yyyy'
-    ],
-    [
-        'input' => ' dd/mm/yyyy ',
-        'expected' => 'dd/mm/yyyy'
-    ],
-    [
-        'input' => ' dd/mm/yyyy',
-        'expected' => 'dd/mm/yyyy'
+        'input' => '24/100/1995',
+        'expected' => false
     ],
     [
         'input' => '',
         'expected' => false
+    ],
+    [
+        'input' => 'cc/10/1995',
+        'expected' => false
+    ],
+    [
+        'input' => '24-10-1995',
+        'expected' => false
     ]
 ];
 
-foreach ($testCases as $key => $test){
+foreach ($date as $key => $test){
     $input = $test['input'];
     $expected =$test['expected'];
 
-    $v = new ValidateRequired();
-    if($v -> isValid($input) != $expected){
+    $c = new ValidateDate();
+    if($c -> isValid($input) != $expected){
         echo "\ntest numero $key non superato mi aspettavo:";
         var_dump($expected);
         echo "\nma ho trovato:";
-        var_dump($v->isValid($input));
+        var_dump($c->isValid($input));
     };
 }

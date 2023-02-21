@@ -1,6 +1,7 @@
 <?php
 
 require "./form_in_php/class/validator/ValidateRequired.php";
+require "./form_in_php/class/validator/Validable.php";
 
 $testCases = [
     [
