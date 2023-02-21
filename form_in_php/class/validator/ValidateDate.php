@@ -13,11 +13,12 @@ class ValidateDate implements Validable {
         if ($d) {
             return $d->format('j/n/o');
         }else{
-            return false;
-        } 
+            return $d;
+        }
         
     }
     public function message(){
 
+        return 'Data non valida';
     }
 }
