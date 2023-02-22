@@ -1,9 +1,23 @@
 <?php
+require "./class/validator/ValidateRequired.php";
+require "./class/validator/Validable.php";
+
 // print_r($_SERVER['REQUEST_METHOD']);
-if ($_SERVER['REQUEST_METHOD']=== 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   echo "dati inviati adesso li devo controllare";
 
-}else {
+  //come associo la validazione ad un campo/input/controllo
+  //nome -> required
+  //birthday -> required | validDate
+
+  $validator_name = new ValidateRequired();
+  $validatedName = $validator_name->isValid($_POST['first_name']);
+  $isValidNameClass = $validator_name->isValid($_POST['first_name']) ? '' : 'is-invalid';
+
+
+
+
+} else {
   echo "l'utente deve ancora compilare il form, non devo fare nulla";
 }
 
@@ -16,8 +30,7 @@ if ($_SERVER['REQUEST_METHOD']=== 'POST') {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bootstrap demo</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 
 <body>
@@ -36,10 +49,18 @@ if ($_SERVER['REQUEST_METHOD']=== 'POST') {
 
           <div class="mb-3">
             <label for="first_name" class="form-label">Nome</label>
-            <input type="text" class="form-control" name="first_name" id="first_name">
-            <div class="invalid-feedback">
-              Il nome è obbligatorio
-            </div>
+            <input type="text" class="form-control <?php echo $isValidNameClass ?>" name="first_name" id="first_name">
+            <?php
+            if (!$validatedName) { ?>
+
+              <div class="invalid-feedback">
+                Il nome è obbligatorio
+              </div>
+
+
+            <?php } ?>
+
+
           </div>
 
           <div class="mb-3">
@@ -112,9 +133,7 @@ if ($_SERVER['REQUEST_METHOD']=== 'POST') {
   </main>
 
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 
 </html>
