@@ -24,20 +24,20 @@
         <form class="mt-1 mt-md-5" action="register-user.php" method="POST">
 
           <div class="mb-3">
-            <label for="first_name" class="form-label">nome</label>
+            <label for="first_name" class="form-label">Nome</label>
             <input type="text" class="form-control" name="first_name" id="first_name">
           </div>
 
           <div class="mb-3">
-            <label for="last_name" class="form-label">cognome</label>
+            <label for="last_name" class="form-label">Cognome</label>
             <input type="text" class="form-control" name="last_name" id="last_name">
           </div>
           <div class="mb-3">
-            <label for="birthday" class="form-label">data di nascita</label>
+            <label for="birthday" class="form-label">Data di nascita</label>
             <input type="date" class="form-control" name="birthday" id="birthday">
           </div>
           <div class="mb-3">
-            <label for="birth_place" class="form-label">luogo di nascita</label>
+            <label for="birth_place" class="form-label">Luogo di nascita</label>
             <input type="text" class="form-control" name="birth_place" id="birth_place">
           </div>
 
