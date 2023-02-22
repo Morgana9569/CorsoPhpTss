@@ -36,6 +36,10 @@ $date = [
     [
         'input' => '24-10-1995',
         'expected' => false
+    ],
+    [
+        'input' => '33/09/1975',
+        'expected' => false
     ]
 ];
 
