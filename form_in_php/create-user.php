@@ -6,16 +6,19 @@ require "./class/validator/ValidateRequired.php";
 require "./class/validator/Validable.php";
 
 // print_r($_SERVER['REQUEST_METHOD']);
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  echo "dati inviati adesso li devo controllare";
 
+$validator_name = new ValidateRequired('','Il nome è obbligatorio');
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  //echo "dati inviati adesso li devo controllare";
+  $validatedName = $validator_name->isValid($_POST['first_name']);
   //come associo la validazione ad un campo/input/controllo
   //nome -> required
   //birthday -> required | validDate
 
-  $validator_name = new ValidateRequired();
-  $validatedName = $validator_name->isValid($_POST['first_name']);
-  $isValidNameClass = $validator_name->isValid($_POST['first_name']) ? '' : 'is-invalid';
+  //<?= equivale a scrivere l'echo con apertura di php
+
+  //$isValidNameClass = $validator_name->isValid($_POST['first_name']) ? '' : 'is-invalid';
 
   $validator_surname = new ValidateRequired();
   $validatedSurname = $validator_surname->isValid($_POST['last_name']);
@@ -79,12 +82,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
           <div class="mb-3">
             <label for="first_name" class="form-label">Nome</label>
-            <input type="text" class="form-control <?php echo $isValidNameClass ?>" name="first_name" id="first_name">
+            <input type="text" value="<?= $validator_name->getValue() ?>"
+            class="form-control <?php !$validator_name->getValid() ? 'is-invalid':'' ?>" name="first_name" id="first_name">
             <?php
-            if (isset($validatedName) && !$validatedName) { ?>
+            if ($validator_name->getValid()) { ?>
 
               <div class="invalid-feedback">
-                Il nome è obbligatorio
+                <?php echo $validator_name->getMessage(); ?>
               </div>
 
             <?php } ?>
