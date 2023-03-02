@@ -29,3 +29,4 @@ class ValidateDate implements Validable
         return 'Data non valida';
     }
 }
+?>

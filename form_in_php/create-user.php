@@ -2,8 +2,9 @@
 
 error_reporting(E_ALL); //serve a visualizzare gli errori
 
-require "./class/validator/ValidateRequired.php";
 require "./class/validator/Validable.php";
+require "./class/validator/ValidateRequired.php";
+
 
 // print_r($_SERVER['REQUEST_METHOD']);
 

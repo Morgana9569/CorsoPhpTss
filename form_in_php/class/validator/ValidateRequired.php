@@ -9,7 +9,8 @@
  *      - Impostare la classe di boostrap is-invalid 
  */
 
-class ValidateRequired implements Validable{
+class ValidateRequired implements Validable
+{
 /** @var string rappresenta il valore immesso nel form ripulito */
 private $value;
 private $message;
@@ -31,11 +32,11 @@ public function __construct($default_value='',$message='è obbligatorio') {
         $valueWidoutSpace = trim($strip_tags);
 
         if ($valueWidoutSpace == '') {
-            $this->value =false;
+            $this->valid =false;
             return false;
         }
         $this->valid = true;
-        $this->value = $valueWidoutSpace
+        $this->value = $valueWidoutSpace;
         return $valueWidoutSpace;
     }
 
