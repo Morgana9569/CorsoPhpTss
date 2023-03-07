@@ -7,3 +7,4 @@ class ValidateMail implements Validable{
     }
 
 }
+?>
