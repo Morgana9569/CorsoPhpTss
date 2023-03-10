@@ -8,24 +8,25 @@ CREATE TABLE regione (
     --FOREIGN KEY () REFERENCES ()
 );
 
-CREATE TABLE province (
+CREATE TABLE provincia (
     id_province int NOT NULL AUTO_INCREMENT,
     nome VARCHAR(99) not NULL,
     sigla CHAR(2) not NULL,
-    PRIMARY KEY(id_province),
+    id_regione int,
+    PRIMARY KEY(id_provincia),
     Foreign Key (id_regione) REFERENCES regione(id_regione)
 
 );
 
 drop table regione;
-drop table province;
+drop table provincia;
 
 insert INTO regione (nome) VALUES('Valle d\'Aosta/Vallée d\'Aoste');
-insert INTO province (nome) VALUES('Barletta-Andria-Trani');
+insert INTO provincia (nome) VALUES('Barletta-Andria-Trani');
 
 select * from regione;
 
-select * from province;
+select * from provincia;
 
 TRUNCATE TABLE regione;
 
