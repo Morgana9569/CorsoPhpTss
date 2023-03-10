@@ -1,8 +1,10 @@
 <?php
 
-class validateMail{
-    public function isValid (string $email): bool {
+
+class ValidateMail implements Validable{
+    public function isValid ($email): bool {
        return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
 }
+?>
