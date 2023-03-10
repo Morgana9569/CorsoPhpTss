@@ -12,7 +12,7 @@ CREATE TABLE provincia (
     id_province int NOT NULL AUTO_INCREMENT,
     nome VARCHAR(99) not NULL,
     sigla CHAR(2) not NULL,
-    id_regione int,
+    id_regione int NULL,
     PRIMARY KEY(id_provincia),
     Foreign Key (id_regione) REFERENCES regione(id_regione)
 
