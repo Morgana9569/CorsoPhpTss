@@ -6,6 +6,8 @@ require "../config.php";
 require "./class/Registry/italia/Regione.php";
 require "./class/Registry/italia/Provincia.php";
 require "./class/validator/Validable.php";
+require "./class/validator/ValidateMail.php";
+require "./class/validator/ValidateDate.php";
 require "./class/validator/ValidateRequired.php";
 
 
