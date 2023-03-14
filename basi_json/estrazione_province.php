@@ -14,8 +14,8 @@ try {
         $regione = $provincia->regione;
         $nome_provincia = addslashes($provincia->nome);
         $sigla = addslashes($provincia->sigla);
-        $regione = $conn->query("SELECT regione_id FROM regione WHERE nome =\"$regione\"")->fetchColumn();
-        $sql = "INSERT INTO provincia (nome,sigla,regione_id) VALUES('$nome_provincia','$sigla','$regione');";
+        $regione = $conn->query("SELECT id_regione FROM regione WHERE nome =\"$regione\"")->fetchColumn();
+        $sql = "INSERT INTO provincia (nome,sigla,id_regione) VALUES('$nome_provincia','$sigla','$regione');";
         echo $sql ."\n";
         $conn->query($sql);
     }

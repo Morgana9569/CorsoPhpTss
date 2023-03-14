@@ -36,5 +36,3 @@ try {
 
 
 //print_r($regioni_unique);
-
-//print_r($regioni_unique);

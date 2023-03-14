@@ -2,6 +2,9 @@
 
 error_reporting(E_ALL); //serve a visualizzare gli errori
 
+require "../config.php";
+require "./class/Registry/italia/Regione.php";
+require "./class/Registry/italia/Provincia.php";
 require "./class/validator/Validable.php";
 require "./class/validator/ValidateRequired.php";
 
@@ -27,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $validatedUsername = $validator_username->isValid($_POST['username']);
   $validatedPassword = $validator_password->isValid($_POST['password']);
 
+  
 
   //come associo la validazione ad un campo/input/controllo
   //nome -> required
@@ -133,8 +137,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php echo $validator_birth_place->getMessage(); ?>
             </div>
 
-            <?php } ?>
+            <?php 
+            } 
+            ?>
 
+          </div>
+
+          <div class="mb-3">
+            <div class="row">
+            <div class="col">
+              <label for="birth_city" class="form-label">Città</label>
+              <input type="text" class="form-control" name="birth_city" id="birth_city">
+            </div>
+
+            <div class="col">
+            <label for="birth_region" class="form-label">Regione</label>
+            <select class="birth_region form-select" name="birth_region" id="birth_region">
+              <option value=""></option>
+
+            <?php foreach (Regione::all() as $regione) : ?>
+              <option value="<?= $regione->id_regione ?>"><?= $regione->nome?></option>
+              <?php endforeach; ?>
+            </select>
+            </div>
+
+            <div class="col">
+            <label for="birth_province" class="form-label">Provincia</label>
+            <select class="birth_province form-select" name="birth_province" id="birth_province">
+            <option value=""></option>
+            <?php foreach (Provincia::all() as $province) : ?>
+              <option value="<?= $province->id_provincia ?>"><?= $province->nome?></option>
+              <?php endforeach; ?>
+            </select>
+            
+            </div>
+          </div>
           </div>
 
           <div class="mb-3">
