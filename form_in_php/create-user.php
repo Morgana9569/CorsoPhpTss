@@ -3,8 +3,9 @@
 use Registry\italia\Provincia;
 use Registry\italia\Regione;
 use validator\ValidateDate;
-use validator\ValidateMail;
+//use validator\ValidateMail;
 use validator\ValidateRequired;
+use validator\ValidatorRunner;
 
 require "../config.php";
 require "./autoload.php";
@@ -13,34 +14,57 @@ require "./autoload.php";
 
 // print_r($_SERVER['REQUEST_METHOD']);
 
-$first_name = new ValidateRequired('','Il Nome è obblicatorio');
-$last_name  = new ValidateRequired('','Il Cognome è obblicatorio');
-$birtday  = new ValidateDate('','La data di nascità non è valida');
-$birth_place  = new ValidateRequired('','Il Luogo di nascita è obbligatorio');
-$gender  = new ValidateRequired('','Il Genere è obbligatorio');
 
-$username_required  = new ValidateRequired('','Username è obbligaztorio');
-$username_email  = new ValidateMail('','Formato email non valido');
 
-$password  = new ValidateRequired('','Password è obbligatorio');
+$validatorRunner = new ValidatorRunner([
+    'first_name' => new ValidateRequired('','Il Nome è obblicatorio'),
+    'last_name'  => new ValidateRequired('','Il Cognome è obblicatorio'),
+    'birthday'  => new ValidateDate('','La data di nascità non è valida'),
+    'birth_city'  => new ValidateRequired('','La città è obbligatoria'),
+    'birth_region'  => new ValidateRequired('','La regione è obbligatoria'),
+    'birth_province'  => new ValidateRequired('','La provincia è obbligatoria'),
+    'gender'  => new ValidateRequired('','Il genere è obbligatorio'),
+
+    'username'  => new ValidateRequired('','Username è obbligaztorio'),
+    //'username_email'  => new ValidateMail('','Formato email non valido'),
+    'password'  => new ValidateRequired('','Password è obbligatorio'),
+]);
+
+extract($validatorRunner->getValidatorList());
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+  $validatorRunner->isValid();
 
-    $first_name->isValid($_POST['first_name']);
-    $last_name->isValid($_POST['last_name']);
-    $birth_place->isValid($_POST['birth_place']);
-    $gender->isValid($_POST['gender']);
-    $username_email->isValid($_POST['username']);
-    $username_required->isValid($_POST['username']);
-    $password->isValid($_POST['password']);
+  if($validatorRunner->getValid()){
+      echo "posso inviare i dati al server";
+  }
+}
 
-    if($first_name->getValid() && $last_name->getValid()){
-        
-    }
+    // $first_name->isValid($_POST['first_name']);
+    // $last_name->isValid($_POST['last_name']);
+    // $birth_place->isValid($_POST['birth_place']);
+    // $gender->isValid($_POST['gender']);
+    // $username_email->isValid($_POST['username']);
+    // $username->isValid($_POST['username']);
+    // $password->isValid($_POST['password']);
+
+    //runner per la validazione
+    // if($first_name->getValid() && $last_name->getValid() && $gender->getValid()){
+    //   //invio i dati al server sql per memorizzarli
+    // }
+
+    // $isValid= true;
+    // foreach (ValidatorRunner::getAll() as $istanza_di_validazione) {
+    //   $isValid = $istanza_di_validazione->getValid() && $isValid;
+    // }
+
+
+
     // Usato per il caso dei radio
     // $value = isset($_POST['gender']) ? $_POST['gender'] :'';
     // $gender->isValid($value);
-}
+// }
 
 
 ?>
@@ -102,33 +126,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
           <div class="mb-3">
             <label for="birthday" class="form-label">Data di nascita</label>
-            <input type="date" value="<?= $birtday->getValue() ?>"
-            class="form-control <?php echo !$birtday ->getValid() ? 'is-invalid':'' ?>" name="birthday" id="birthday">
+            <input type="date" value="<?= $birthday->getValue() ?>"
+            class="form-control <?php echo !$birthday ->getValid() ? 'is-invalid':'' ?>" name="birthday" id="birthday">
             <?php
-            if (!$birtday->getValid()) { ?>
+            if (!$birthday->getValid()) { ?>
 
             <div class="invalid-feedback">
-            <?php echo $birtday->getMessage(); ?>
+            <?php echo $birthday->getMessage(); ?>
             </div>
             
             <?php } ?>
-
-          </div>
-
-          <div class="mb-3">
-            <label for="birth_place" class="form-label">Luogo di nascita</label>
-            <input type="text" value="<?= $birth_place->getValue() ?>"
-            class="form-control <?php echo !$birth_place->getValid() ? 'is-invalid':'' ?>" name="birth_place" id="birth_place">
-            <?php
-            if (!$birth_place->getValid()) { ?>
-            
-            <div class="invalid-feedback">
-            <?php echo $birth_place->getMessage(); ?>
-            </div>
-
-            <?php 
-            } 
-            ?>
 
           </div>
 
@@ -196,19 +203,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div class="mb-3">
             <label for="username" class="form-label">Nome utente</label>
             <input type="text" class="form-control 
-            <?php echo (!$username_email->getValid() && !$username_required->getValid()) ? 'is-invalid':'' ?>" name="username" id="username">
+            <?php echo (!$username->getValid() && !$username->getValid()) ? 'is-invalid':'' ?>" name="username" id="username">
             <?php
-            if (!$username_email->getValid()) { ?>
+           // if (!$username_email->getValid()) { ?>
             
             <div class="invalid-feedback">
-            <?php echo $username_email->getMessage(); ?>
+            <?php //echo $username_email->getMessage(); ?>
             </div>
-
-            <?php } ?>
+ <!-- } -->
+            <?php ?>
             <?php
-                        if (!$username_required->getValid()) : ?>
+                        if (!$username->getValid()) : ?>
                             <div class="invalid-feedback">
-                            <?php echo $username_required->getMessage() ?>
+                            <?php echo $username->getMessage() ?>
                             </div>
                         <?php endif ?>
 
