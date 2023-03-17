@@ -14,4 +14,9 @@ class User {
     public $username; 
     public $password;
 
+
+    public function label()
+    {
+       return $this->first_name." ".$this->last_name;
+    }
 }

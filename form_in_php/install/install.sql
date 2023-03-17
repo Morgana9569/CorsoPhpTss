@@ -240,6 +240,9 @@ ALTER TABLE `regione`
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`);
 
+ALTER TABLE `user`
+ADD UNIQUE (username);
+
 --
 -- AUTO_INCREMENT per le tabelle scaricate
 --

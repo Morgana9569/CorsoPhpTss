@@ -31,9 +31,14 @@ public function update()
     # code...
 }
 
-public function read()
+public function read(int $id_user=null)
 {
-    # code...
+    $conn = new PDO(DB_DSN,DB_USER, DB_PASSWORD);
+    $query = "SELECT * FROM user;";
+    $stm = $conn->prepare($query);
+    $stm->execute();
+    $result = $stm->fetchAll(PDO::FETCH_CLASS, USER::class);
+    return $result;
 }
 
 public function delete()
