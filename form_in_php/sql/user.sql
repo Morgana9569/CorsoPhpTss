@@ -1,3 +1,4 @@
+-- Active: 1678177573379@@127.0.0.1@3306@form_in_php
 CREATE TABLE `user` (
   `id_user` int(10) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(255) NOT NULL,
