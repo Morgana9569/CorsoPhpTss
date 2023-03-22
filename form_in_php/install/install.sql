@@ -227,6 +227,12 @@ INSERT INTO `user` (`id_user`, `first_name`, `last_name`, `birthday`, `birth_cit
 ALTER TABLE `provincia`
   ADD PRIMARY KEY (`id_provincia`);
 
+  ALTER TABLE `user`
+    ADD PRIMARY KEY (`id_user`);
+
+  ALTER TABLE `user`
+    ADD UNIQUE(username);
+
 --
 -- Indici per le tabelle `regione`
 --
