@@ -27,3 +27,6 @@
 
 
 curl http://localhost/corso_php_mysql_2223/form_in_php/log-in-response.php?email=sbagliata
+
+- [TO DO LIST](https://todomvc.com/)
+- [TO DO LIST IN PHP](https://www.sourcecodester.com/tutorials/php/12333/php-simple-do-list-app.html)
