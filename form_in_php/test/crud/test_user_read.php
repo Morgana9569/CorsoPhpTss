@@ -1,4 +1,6 @@
 <?php
+#form_in_php/test/crud/test_user_read.php
+//i test li lanciamo dalla root, quindi abbiamo già il file config
 
 use crud\UserCRUD;
 use models\User;
@@ -6,49 +8,51 @@ use models\User;
 include "config.php";
 include "form_in_php/test/test_autoload.php";
 
-(new PDO (DB_DSN,DB_USER,DB_PASSWORD))->query("TRUNCATE TABLE user;");
+// svuoto  la tabella quando lancio il test
+(new PDO(DB_DSN,DB_USER,DB_PASSWORD))->query("TRUNCATE TABLE user;");
 $crud = new UserCRUD();
 $user = new User();
-//
-$user->first_name = "Sasso";
-$user->last_name = "Sissi";
-$user->birth_city = "Torino";
-$user->birthday = "2017-01-01";
-$user->gender = "M";
-$user->id_regione = "9";
-$user->id_provincia = "56";
-$user->username = "Sasso@Sissi.com";
-$user->password = md5("Password");
 
-$result = $crud->read();
-if ($result === false) {
-    echo "\ndatabase iniziale vuoto\n";
-}
-print_r($result);
+$user->first_name = "Luigi";
+$user->last_name = "Verdi";
+//formato sql perchè va nella query
+$user->birthday = "2017-01-01";
+$user->birth_city = "Torino";
+$user->id_regione = "9";
+$user->id_provincia = "15";
+$user->gender = "M";
+$user->username = "luigiverdi@gmail.com";
+$user->password = md5('Password');
 
 $crud->create($user);
-$result = $crud->read(1);
+
+$result = $crud->read(); //array|vuoto
+if($result === false){
+    echo "\ndatabase iniziale vuoto\n";
+};
+
+$result = $crud->read(1); //User
+//get_class = classe a cui appartiene l'oggetto
 if(class_exists(User::class)&& get_class($result) == User::class){
-    echo "\nread utente esistente test superato\n";
+    echo "\ntest superato\n";
 }
+//print_r($result);
 
-print_r($result);
+$result = $crud->read(2); //false
+if($result === false){ //=== perchè voglio che sia false e anche boolean
+    echo"\nutente non esistente superato\n";
 
-$result = $crud->read(2);
-if ($result === false) {
-   echo "\nutente non esistente superato\n";
 }
-print_r($result);
+//print_r($result);
 
-$result = $crud->read();
-if (is_array($result)&& count($result)===1) {
-    echo "\nutente non esistente superato\n";
-}
-print_r($result);
-
+$result = $crud->read(); //array|vuoto
+if(is_array($result) && count($result) === 1){
+    echo "\nricerca di tutti gli utenti (1)\n";
+};
 
 $crud->delete(1);
 $result = $crud->read(1);
-if ($result === false) {
-    echo "\nutente con id 1 è stato eliminato\n";
+if($result === false){ 
+    echo"\nutente con id 1 è stato eliminato\n";
+
 }

@@ -1,9 +1,11 @@
 <?php
 
+use crud\UserCRUD;
+use models\User;
 use Registry\italia\Provincia;
 use Registry\italia\Regione;
 use validator\ValidateDate;
-//use validator\ValidateMail;
+use validator\ValidateMail;
 use validator\ValidateRequired;
 use validator\ValidatorRunner;
 
@@ -20,11 +22,11 @@ $validatorRunner = new ValidatorRunner([
     'first_name' => new ValidateRequired('','Il Nome è obblicatorio'),
     'last_name'  => new ValidateRequired('','Il Cognome è obblicatorio'),
     'birthday'  => new ValidateDate('','La data di nascità non è valida'),
+    'birthday'  => new ValidateRequired('','La data di nascità è obbligatoria'),
     'birth_city'  => new ValidateRequired('','La città è obbligatoria'),
-    'birth_region'  => new ValidateRequired('','La regione è obbligatoria'),
-    'birth_province'  => new ValidateRequired('','La provincia è obbligatoria'),
+    'id_regione'  => new ValidateRequired('','La regione è obbligatoria'),
+    'id_provincia'  => new ValidateRequired('','La provincia è obbligatoria'),
     'gender'  => new ValidateRequired('','Il genere è obbligatorio'),
-
     'username'  => new ValidateRequired('','Username è obbligaztorio'),
     //'username_email'  => new ValidateMail('','Formato email non valido'),
     'password'  => new ValidateRequired('','Password è obbligatorio'),
@@ -37,7 +39,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $validatorRunner->isValid();
 
   if($validatorRunner->getValid()){
-      echo "posso inviare i dati al server";
+    //i dati mi arrivano da un array, ma il crud lavora con oggetto 
+     // $user = (object) $_POST;
+     $user = User::arrayToUser($_POST);
+
+      $crud = new UserCRUD();
+      //il create del crud vuole un oggetto di tipo user
+      $crud->create($user);
+
+      //redirect
+      header("location: http://www.google.com");
   }
 }
 
@@ -75,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bootstrap demo</title>
+  <title>Esercitazione Form</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 
@@ -143,62 +154,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="row">
             <div class="col">
               <label for="birth_city" class="form-label">Città</label>
-              <input type="text" class="form-control" name="birth_city" id="birth_city">
+              <input type="text" value="<?= $birth_city->getValue() ?>" class="form-control <?php echo !$birth_city->getValid() ? 'is-invalid':'' ?>" name="birth_city" id="birth_city">
+              <?php if (!$birth_city->getValid()) : ?>
+                            <div class="invalid-feedback">
+                                <?php echo $birth_city->getMessage() ?>
+                            </div>
+                        <?php endif ?>
+            </div>
+
+            <div class="col"> 
+                <label for = "birth_region" class= "form-label">Regione</label>
+                <!-- select, voglio ottenere l'elenco regioni -->
+                <select id = "birth_region" value="<?= $id_regione->getValue() ?>"class="form-select birth_region <?php echo !$id_regione->getValid() ? 'is-invalid':'' ?>" name="id_regione">
+                <option value=""></option>
+                <?php foreach (Regione::all() as $regione) : ?>
+                <option value="<?= $regione->$id_regione?>"><?=$regione->nome ?></option>
+                  <?php endforeach; ?>
+                  </select>
+                  <?php if (!$id_regione->getValid()) : ?>
+                  <div class="invalid-feedback">
+                  <?php echo $id_regione->getMessage() ?>
+                  </div>
+                  <?php endif ?>                 
             </div>
 
             <div class="col">
-            <label for="birth_region" class="form-label">Regione</label>
-            <select class="birth_region form-select" name="birth_region" id="birth_region">
+              <label for = "birth_province" class= "form-label">Province</label>
+              <select id = "birth_province" value="<?= $id_provincia->getValue() ?>" class="form-select birth_province <?php echo !$id_provincia->getValid() ? 'is-invalid':'' ?>" name="id_provincia">
               <option value=""></option>
-
-            <?php foreach (Regione::all() as $regione) : ?>
-              <option value="<?= $regione->id_regione ?>"><?= $regione->nome?></option>
+              <!-- select, voglio ottenere l'elenco province -->
+              <?php foreach (Provincia::all() as $provincia) : ?>
+              <option value="<?= $provincia->id_provincia?>"><?=$provincia->nome ?></option>
               <?php endforeach; ?>
-            </select>
+              </select>   
+                <?php if (!$id_provincia->getValid()) : ?>
+                <div class="invalid-feedback">
+                <?php echo $id_provincia->getMessage() ?>
+                </div>
+                <?php endif ?>                 
             </div>
 
-            <div class="col">
-            <label for="birth_province" class="form-label">Provincia</label>
-            <select class="birth_province form-select" name="birth_province" id="birth_province">
-            <option value=""></option>
-            <?php foreach (Provincia::all() as $province) : ?>
-              <option value="<?= $province->id_provincia ?>"><?= $province->nome?></option>
-              <?php endforeach; ?>
-            </select>
-            
-            </div>
-          </div>
-          </div>
-
-          <div class="mb-3">
-            <span>Genere</span>
-            <div class="form-check">
-              <!-- TODO: METTERE IS- INVALID SU TUTTI I GENERI -->
-              <input value="<?= $gender->getValue() ?>" 
-              class="form-check-input <?php echo !$gender->getValid() ? 'is-invalid' : '' ?>" type="radio" name="gender" value="M" id="gender_M">
-              <label class="form-check-label" for="gender_M">Maschile</label>
-            </div>
-            <div class="form-check">
-              <input value="<?= $gender->getValue() ?>"
-              class="form-check-input <?php echo !$gender->getValid() ? 'is-invalid' : '' ?>" type="radio" name="gender" value="F" id="gender_F">
-              <label class="form-check-label" for="gender_F">Femminile</label>
-            </div>
-            <div class="form-check">
-              <input value="<?= $gender->getValue() ?>"
-              class="form-check-input <?php echo !$gender->getValid() ? 'is-invalid' : '' ?>" type="radio" name="gender" value="A" id="gender_A">
-              <label class="form-check-label" for="gender_A">Altro</label>
-
-              <?php
-            if (!$gender->getValid()) : ?>
-              <div class="invalid-feedback">
-              <?php echo $gender->getMessage() ?>
-              </div>
-
-            </div>
-
-            <?php endif ?>
-
-          </div>
+                        <div class="mb-3">
+                        <!-- <h1><?php echo $gender->getValue() == 'M' ? 'AA':'BB' ?></h1> -->
+                        <label for="gender" class="form-label">Genere</label>
+                        <select name="gender" class="form-select <?php echo !$gender->getValid() ? 'is-invalid' :'' ?>" id="gender">
+                            <option value=""></option>
+                            <option <?php echo $gender->getValue() == 'M' ? 'selected':''  ?> value="M">M</option>
+                            <option <?php echo $gender->getValue() == 'F' ? 'selected':''  ?> value="F">F</option>
+                            <option <?php echo $gender->getValue() == 'A' ? 'selected':''  ?> value="A">Altro</option>
+                        </select>
+                        <?php
+                        if (!$gender->getValid()) : ?>
+                            <div class="invalid-feedback">
+                                <?php echo $gender->getMessage() ?>  
+                            </div>
+                        <?php endif; ?>
+                        
+                        </div>
 
           <div class="mb-3">
             <label for="username" class="form-label">Nome utente</label>
