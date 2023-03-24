@@ -63,9 +63,9 @@ class UserCRUD
         $conn = new \PDO(DB_DSN, DB_USER, DB_PASSWORD);
         if (!is_null($id_user)) {
             //variante del read passando user_id
-            $query = "SELECT * FROM user WHERE user_id = :user_id;";
+            $query = "SELECT * FROM user WHERE id_user = :id_user;";
             $stm =  $conn->prepare($query);
-            $stm->bindValue(':user_id', $id_user, PDO::PARAM_INT);
+            $stm->bindValue(':id_user', $id_user, PDO::PARAM_INT);
             //ATTENZIONE devo specificare fetch_class perchè altrimenti mi ripete
             //due volte le informazioni (di default è fetch both)
             //devo specificare il nome della classe: 'models\User'

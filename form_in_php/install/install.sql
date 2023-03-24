@@ -4,7 +4,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mar 22, 2023 alle 08:53
+-- Creato il: Mar 24, 2023 alle 12:11
 -- Versione del server: 10.4.27-MariaDB
 -- Versione PHP: 8.2.0
 
@@ -31,7 +31,7 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `provincia`;
 CREATE TABLE `provincia` (
   `id_provincia` int(11) NOT NULL,
-  `nome` varchar(99) NOT NULL,
+  `nome` varchar(255) NOT NULL,
   `sigla` char(2) NOT NULL,
   `id_regione` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -161,7 +161,7 @@ INSERT INTO `provincia` (`id_provincia`, `nome`, `sigla`, `id_regione`) VALUES
 DROP TABLE IF EXISTS `regione`;
 CREATE TABLE `regione` (
   `id_regione` int(11) NOT NULL,
-  `nome` varchar(99) NOT NULL
+  `nome` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -198,25 +198,29 @@ INSERT INTO `regione` (`id_regione`, `nome`) VALUES
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `id_user` int(10) NOT NULL,
+  `id_user` int(11) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `birthday` date NOT NULL,
   `birth_city` varchar(255) NOT NULL,
   `id_regione` int(11) NOT NULL,
   `id_provincia` int(11) NOT NULL,
-  `gender` enum('M','F','A') NOT NULL,
+  `gender` enum('M','F') NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dump dei dati per la tabella `user`
---
+
 
 INSERT INTO `user` (`id_user`, `first_name`, `last_name`, `birthday`, `birth_city`, `id_regione`, `id_provincia`, `gender`, `username`, `password`) VALUES
-(1, 'Sasso', 'Sissi', '2017-01-01', 'Torino', 9, 56, 'M', 'Sasso@Sissi.com', 'dc647eb65e6711e155375218212b3964');
+(9, 'Mario', 'Ciccio', '2022-05-15', 'Roma', 15, 15, 'A', '@b.itdfdfsg', 'segretissimo'),
+(15, 'Luigi', 'Verdi', '2023-08-10', 'Sassari', 16, 15, 'M', 'aaa@xcvxc', 'a3ea3259dd51c5d28ac011a8dbf78e79'),
+(19, 'Davide', 'Giuva', '1997-08-13', 'Rivoli', 20, 18, 'M', 'xzczxcxzczxcz', 'a3ea3259dd51c5d28ac011a8dbf78e79'),
+(20, 'Lana', 'Dantas', '1999-04-23', 'NonLoSo', 18, 17, 'F', 'wadaswdfasdf asfa', 'a3ea3259dd51c5d28ac011a8dbf78e79'),
+(21, 'Andrea', 'Fabbricatore', '1995-10-24', 'Torino', 18, 17, 'F', 'a@b.it', 'a3ea3259dd51c5d28ac011a8dbf78e79'),
+(23, 'Valentina', 'Del Monaco', '1997-04-05', 'Torino', 2, 1, 'F', 'b@b.it', 'a3ea3259dd51c5d28ac011a8dbf78e79');
 
+--
 --
 -- Indici per le tabelle scaricate
 --
@@ -226,12 +230,6 @@ INSERT INTO `user` (`id_user`, `first_name`, `last_name`, `birthday`, `birth_cit
 --
 ALTER TABLE `provincia`
   ADD PRIMARY KEY (`id_provincia`);
-
-  ALTER TABLE `user`
-    ADD PRIMARY KEY (`id_user`);
-
-  ALTER TABLE `user`
-    ADD UNIQUE(username);
 
 --
 -- Indici per le tabelle `regione`
@@ -244,7 +242,20 @@ ALTER TABLE `regione`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `username_2` (`username`),
+  ADD UNIQUE KEY `username_3` (`username`),
+  ADD UNIQUE KEY `username_4` (`username`),
+  ADD UNIQUE KEY `username_5` (`username`),
+  ADD UNIQUE KEY `username_6` (`username`),
+  ADD UNIQUE KEY `username_7` (`username`),
+  ADD UNIQUE KEY `username_8` (`username`),
+  ADD UNIQUE KEY `username_9` (`username`),
+  ADD UNIQUE KEY `username_10` (`username`),
+  ADD UNIQUE KEY `username_11` (`username`),
+  ADD UNIQUE KEY `username_12` (`username`),
+  ADD UNIQUE KEY `username_13` (`username`),
+  ADD UNIQUE KEY `username_14` (`username`);
 
 --
 -- AUTO_INCREMENT per le tabelle scaricate
@@ -266,7 +277,7 @@ ALTER TABLE `regione`
 -- AUTO_INCREMENT per la tabella `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
