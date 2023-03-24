@@ -1,5 +1,8 @@
 <?php
 #php form_in_php/test/test_regioni.php
+
+use Registry\italia\Regione;
+
 require "./config.php";
 require "./form_in_php/class/Registry/italia/Regione.php";
 

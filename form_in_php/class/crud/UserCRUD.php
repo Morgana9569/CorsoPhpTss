@@ -47,8 +47,8 @@ class UserCRUD
         $stm->bindValue(':last_name', $user->last_name, \PDO::PARAM_STR);
         $stm->bindValue(':birthday', $user->birthday, \PDO::PARAM_STR);
         $stm->bindValue(':birth_city', $user->birth_city, \PDO::PARAM_STR);
-        $stm->bindValue(':id_regione', $user->regione_id, \PDO::PARAM_INT);
-        $stm->bindValue(':id_provincia', $user->provincia_id, \PDO::PARAM_INT);
+        $stm->bindValue(':id_regione', $user->id_regione, \PDO::PARAM_INT);
+        $stm->bindValue(':id_provincia', $user->id_provincia, \PDO::PARAM_INT);
         $stm->bindValue(':gender', $user->gender, \PDO::PARAM_STR);
         $stm->bindValue(':username', $user->username, \PDO::PARAM_STR);
         $stm->bindValue(':password', md5($user->password), \PDO::PARAM_STR);
@@ -100,9 +100,9 @@ class UserCRUD
     public function delete($id_user)
     {
         $conn = new \PDO(DB_DSN, DB_USER, DB_PASSWORD);
-        $query = "DELETE FROM user where user_id = :user_id";
+        $query = "DELETE FROM user where id_user = :id_user";
         $stm =  $conn->prepare($query);
-        $stm->bindValue(':user_id', $id_user, PDO::PARAM_INT);
+        $stm->bindValue(':id_user', $id_user, PDO::PARAM_INT);
         //non si fa fetchAll perchè non ho un risultato
         $stm->execute();
         //dato da restituire: mi dice cos'ho cancellato
