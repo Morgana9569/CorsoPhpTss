@@ -154,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="row">
             <div class="col">
               <label for="birth_city" class="form-label">Città</label>
-              <input type="text" value="<?= $birth_city->getValue() ?>" class="form-control <?php echo !$birth_city->getValid() ? 'is-invalid':'' ?>" name="birth_city" id="birth_city">
+              <input type="text" class="form-control <?php echo !$birth_city->getValid() ? 'is-invalid':'' ?>" name="birth_city" id="birth_city">
               <?php if (!$birth_city->getValid()) : ?>
                             <div class="invalid-feedback">
                                 <?php echo $birth_city->getMessage() ?>
@@ -163,24 +163,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="col"> 
-                <label for = "birth_region" class= "form-label">Regione</label>
-                <!-- select, voglio ottenere l'elenco regioni -->
-                <select id = "birth_region" value="<?= $id_regione->getValue() ?>"class="form-select birth_region <?php echo !$id_regione->getValid() ? 'is-invalid':'' ?>" name="id_regione">
-                <option value=""></option>
-                <?php foreach (Regione::all() as $regione) : ?>
-                <option value="<?= $regione->$id_regione?>"><?=$regione->nome ?></option>
-                  <?php endforeach; ?>
-                  </select>
-                  <?php if (!$id_regione->getValid()) : ?>
-                  <div class="invalid-feedback">
-                  <?php echo $id_regione->getMessage() ?>
-                  </div>
-                  <?php endif ?>                 
+            <label for="birth_region" class="form-label">Regione</label>
+                                <select id="birth_region" class="form-select <?php echo !$id_regione->getValid() ? 'is-invalid' : '' ?>" name="id_regione">
+                                    <option value=""></option>
+                                    <?php foreach (Regione::all() as $regione) : ?>
+                                        <option value="<?= $regione->id_regione ?>"><?= $regione->nome ?></option>
+                                    <?php endforeach;  ?>
+                                </select>
+                                <?php if (!$id_regione->getValid()) : ?>
+                                    <div class="invalid-feedback">
+                                        <?php echo $id_regione->getMessage() ?>
+                                    </div>
+                                <?php endif; ?>                
             </div>
 
             <div class="col">
               <label for = "birth_province" class= "form-label">Province</label>
-              <select id = "birth_province" value="<?= $id_provincia->getValue() ?>" class="form-select birth_province <?php echo !$id_provincia->getValid() ? 'is-invalid':'' ?>" name="id_provincia">
+              <select id="birth_province" class="form-select <?php echo !$id_provincia->getValid() ? 'is-invalid' : '' ?>" name="id_provincia">
               <option value=""></option>
               <!-- select, voglio ottenere l'elenco province -->
               <?php foreach (Provincia::all() as $provincia) : ?>
