@@ -15,6 +15,5 @@ CREATE TABLE `user` (
 
 drop table USER;
 
-
 INSERT INTO `user` (`first_name`, `last_name`, `birthday`, `birth_city`, `id_regione`, `id_provincia`, `gender`, `username`, `password`) VALUES
 ( 'Mario', 'Rossi', '2023-03-05', 'Torino', 12, 96, 'M', 'mariorossi@gmail.com', '5f4dcc3b5aa765d61d8327deb882cf99');

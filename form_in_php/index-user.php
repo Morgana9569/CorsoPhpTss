@@ -28,7 +28,7 @@ $users = (new UserCRUD())->read();
             <td><?= $user->birth_city ?></td>
             <td>
                 <a href="create-user.php" class="btn btn-primary btn-xs">edit</a>
-                <buttom class="btn btn-danger btn-xs">delete</buttom>
+                <button class="btn btn-danger btn-xs">delete</button>
             </td>
         </tr>
     <?php } ?>

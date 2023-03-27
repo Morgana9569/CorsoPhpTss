@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $crud->create($user);
 
     //redirect
-    header("location: http://www.google.com");
+    header("location: index-user.php");
   }
 }
 
@@ -222,7 +222,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               </div>
             <?php endif ?>
           </div>
-
 
           <button class="btn btn-primary btn-sm" type="submit"> Registrati </button>
     </form>

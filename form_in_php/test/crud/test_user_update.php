@@ -25,14 +25,14 @@ $crud->create($user);
 print_r($crud->read(1));
 
 $user = $crud->read(1);
-$user->first_name = "Giorgio";
-$user->last_name = "Santo";
-$user->birthday = "2015-01-03";
+$user->first_name = "Luca";
+$user->last_name = "Santorini";
+$user->birthday = "1998-01-09";
 $user->birth_city = "Roma";
 $user->id_regione = "4";
 $user->id_provincia = "8";
-$user->gender = "M";
-$user->username = "giorgiosanto@gmail.com";
+$user->gender = "F";
+$user->username = "lucasantorini@gmail.com";
 $user->password = md5('Password');
 
 $crud->update($user);
