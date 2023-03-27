@@ -9,8 +9,6 @@ use PDO;
 class UserCRUD
 {
 
-
-
     public function create(User $user)
     {
         $query = "INSERT INTO user ( first_name, last_name, birthday, birth_city, id_regione, id_provincia, gender, username, password)
@@ -32,7 +30,6 @@ class UserCRUD
         $stm->bindValue(':password', md5($user->password), \PDO::PARAM_STR);
         // dopo aver associato i valori ai parametri possiamo eseguire la query
         $stm->execute();
-        
     }
 
     public function update($user)
@@ -41,7 +38,7 @@ class UserCRUD
         $query = "UPDATE user SET first_name = :first_name, last_name = :last_name, 
         birthday = :birthday, birth_city = :birth_city, id_regione = :id_regione, 
         id_provincia = :id_provincia, gender = :gender, username = :username, password = :password WHERE id_user = :id_user;";
-       
+
         $stm =  $conn->prepare($query);
         $stm->bindValue(':first_name', $user->first_name, \PDO::PARAM_STR);
         $stm->bindValue(':last_name', $user->last_name, \PDO::PARAM_STR);
@@ -54,11 +51,10 @@ class UserCRUD
         $stm->bindValue(':password', md5($user->password), \PDO::PARAM_STR);
         $stm->bindValue(':id_user', $user->id_user, \PDO::PARAM_INT);
         $stm->execute();
-       
     }
 
     //leggo le informazioni su tutti gli utenti
-    public function read(int $id_user = null)
+    public function read(int $id_user = null): User|array|bool
     {
         $conn = new \PDO(DB_DSN, DB_USER, DB_PASSWORD);
         if (!is_null($id_user)) {
