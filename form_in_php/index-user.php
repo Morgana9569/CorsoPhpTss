@@ -28,9 +28,9 @@ $users = (new UserCRUD())->read();
             <td><?= $user->last_name ?></td>
             <td><?= $user->birth_city ?></td>
             <td>
-                <a href="edit-user.php?id_user=<?=$user->id_user?>" class="btn btn-primary btn-sm">Modifica</a>
+                <a href="edit-user.php?id_user=<?=$user->id_user?>" class="btn btn-primary btn-sm"><span class="fa-solid fa-pen"></span> Modifica</a>
                 <!--  -->
-                <a href="delete-user.php?id_user=<?=$user->id_user?>" class="btn btn-danger btn-sm">Cancella</a>
+                <a href="delete-user.php?id_user=<?=$user->id_user?>" class="btn btn-danger btn-sm"><span class="fa-solid fa-poo"></span> Cancella</a>
             </td>
         </tr>
     <?php } ?>

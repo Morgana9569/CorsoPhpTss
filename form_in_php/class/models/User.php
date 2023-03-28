@@ -14,6 +14,7 @@ class User
     public $gender;
     public $username;
     public $password;
+    public $id_user;
 
     //rappresenta nome e cognome dell'utente di seguito
     public function label()

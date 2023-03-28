@@ -28,9 +28,9 @@ $validatorRunner = new ValidatorRunner([
     'id_regione'  => new ValidateRequired($user->id_regione, 'La regione è obbligatoria'),
     'id_provincia'  => new ValidateRequired($user->id_provincia, 'La provincia è obbligatoria'),
     'gender'  => new ValidateRequired($user->gender, 'Il genere è obbligatorio'),
-    'username'  => new ValidateRequired($user->username, 'Username è obbligatorio'),
+    //'username'  => new ValidateRequired($user->username, 'Username è obbligatorio'),
     //'username_email'  => new ValidateMail('','Formato email non valido'),
-    'password'  => new ValidateRequired('', 'Password è obbligatorio'),
+    //'password'  => new ValidateRequired('', 'Password è obbligatorio'),
 ]);
 extract($validatorRunner->getValidatorList());
 
@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = User::arrayToUser($_POST);
 
         $crud = new UserCRUD();
+        $user->id_user = filter_input(INPUT_GET,'id_user', FILTER_VALIDATE_INT);
         //il create del crud vuole un oggetto di tipo user
         $crud->update($user);
 
@@ -67,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     <div class="col-sm-4">
 
-        <form class="mt-1 mt-md-5" action="edit-user.php" method="POST">
+        <form class="mt-1 mt-md-5" action="edit-user.php?id_user=<?=$user->id_user ?>" method="POST">
 
             <div class="mb-3">
                 <label for="first_name" class="form-label">Nome</label>
@@ -123,12 +124,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php endif ?>
                     </div>
 
+                    </div>
+                    
                     <div class="col">
                         <label for="birth_region" class="form-label">Regione</label>
                         <select id="birth_region" class="form-select <?php echo !$id_regione->getValid() ? 'is-invalid' : '' ?>" name="id_regione">
                             <option value="">Seleziona</option>
                             <?php foreach (Regione::all() as $regione) : ?>
-                                <option <?php $id_regione->getValue() == $regione->id_regione ? 'selected':'' ?> value="<?= $regione->id_regione ?>"><?= $regione->nome ?></option>
+                                <option <?php echo $id_regione->getValue() == $regione->id_regione ? 'selected':'' ?> value="<?= $regione->id_regione ?>"><?= $regione->nome ?></option>
                             <?php endforeach;  ?>
                         </select>
                         <?php if (!$id_regione->getValid()) : ?>
@@ -144,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <option value="">Seleziona</option>
                             <!-- select, voglio ottenere l'elenco province -->
                             <?php foreach (Provincia::all() as $provincia) : ?>
-                                <option <?php $id_provincia->getValue() == $provincia->id_provincia ? 'selected':'' ?> value="<?= $provincia->id_provincia ?>"><?= $provincia->nome ?></option>
+                                <option <?php echo $id_provincia->getValue() == $provincia->id_provincia ? 'selected':'' ?> value="<?= $provincia->id_provincia ?>"><?= $provincia->nome ?></option>
                             <?php endforeach; ?>
                         </select>
                         <?php if (!$id_provincia->getValid()) : ?>
@@ -172,40 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     </div>
 
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Nome utente</label>
-                        <input type="text" value="<?= $username->getValue()?> " class="form-control 
-                        <?php echo (!$username->getValid() && !$username->getValid()) ? 'is-invalid' : '' ?>" name="username" id="username">
-                        <?php // if (!$username_email->getValid()) { 
-                        ?>
-
-                        <div class="invalid-feedback">
-                            <?php //echo $username_email->getMessage();
-                            ?>
-                        </div>
-                        <!-- } -->
-                        <?php ?>
-                        <?php
-                        if (!$username->getValid()) : ?>
-                            <div class="invalid-feedback">
-                                <?php echo $username->getMessage() ?>
-                            </div>
-                        <?php endif ?>
-
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="text" id="password" name="password" class="form-control <?php echo !$password->getValid() ? 'is-invalid' : ''  ?>">
-                        <?php
-                        if (!$password->getValid()) : ?>
-                            <div class="invalid-feedback">
-                                <?php echo $password->getMessage() ?>
-                            </div>
-                        <?php endif ?>
-                    </div>
-
-                    <button class="btn btn-primary btn-sm" type="submit"> Aggiorna </button>
+                    <button class="btn btn-primary btn-sm" type="submit"><span class="fa-solid fa-pen"></span> Aggiorna </button>
         </form>
     </div>
 
