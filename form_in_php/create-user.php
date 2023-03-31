@@ -146,9 +146,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div class="col">
             <label for="birth_region" class="form-label">Regione</label>
             <select id="birth_region" class="form-select <?php echo !$id_regione->getValid() ? 'is-invalid' : '' ?>" name="id_regione">
-              <option value=""></option>
+              <option value="">Seleziona</option>
               <?php foreach (Regione::all() as $regione) : ?>
-                <option value="<?= $regione->id_regione ?>"><?= $regione->nome ?></option>
+                <option <?php echo $id_regione->getValue() == $regione->id_regione ? 'selected':'' ?> value="<?= $regione->id_regione ?>"><?= $regione->nome ?></option>
               <?php endforeach;  ?>
             </select>
             <?php if (!$id_regione->getValid()) : ?>
@@ -161,10 +161,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div class="col">
             <label for="birth_province" class="form-label">Province</label>
             <select id="birth_province" class="form-select <?php echo !$id_provincia->getValid() ? 'is-invalid' : '' ?>" name="id_provincia">
-              <option value=""></option>
+              <option value="">Seleziona</option>
               <!-- select, voglio ottenere l'elenco province -->
               <?php foreach (Provincia::all() as $provincia) : ?>
-                <option value="<?= $provincia->id_provincia ?>"><?= $provincia->nome ?></option>
+                <option <?php echo $id_provincia->getValue() == $provincia->id_provincia ? 'selected':'' ?> value="<?= $provincia->id_provincia ?>"><?= $provincia->nome ?></option>
               <?php endforeach; ?>
             </select>
             <?php if (!$id_provincia->getValid()) : ?>
