@@ -1,32 +1,33 @@
 <?php
 
-use crud\UserCRUD;
-use models\User;
+use crud\TaskCRUD;
+use models\Task;
 
 include "../../config.php";
 include "../autoload.php";
 
 // echo $_SERVER['REQUEST_METHOD'];
 
-$crud = new UserCRUD;
+$crud = new TaskCRUD;
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
 
-        $id_user = filter_input(INPUT_GET, 'id_user');
-        if (!is_null($id_user)) {
-            echo json_encode($crud->read($id_user));
+        $task_id = filter_input(INPUT_GET, 'id_user');
+        if (!is_null($task_id)) {
+            echo json_encode($crud->read($task_id));
         } else {
-            $users = $crud->read();
-            echo json_encode($users);
+            $task = $crud->read();
+            echo json_encode($task);
         }
+        
         break;
 
     case 'DELETE':
 
-        $id_user = filter_input(INPUT_GET, 'id_user');
-        if (!is_null($id_user)) {
-            $rows = $crud->delete($id_user);
+        $task_id = filter_input(INPUT_GET, 'task_id');
+        if (!is_null($task_id)) {
+            $rows = $crud->delete($task_id);
             if ($rows == 1) {
                 http_response_code(204);
             }
@@ -39,8 +40,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     'errors' => [
                         [
                             'status' => 404,
-                            'title' => "Utente non trovato",
-                            'details' => $id_user
+                            'title' => "Task non trovato",
+                            'details' => $task_id
                         ]
                     ]
                 ];
@@ -54,15 +55,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $input = file_get_contents('php://input');
         $request = json_decode($input, true); // ottengo iun array associativo
 
-        $user = User::arrayToUser($request);
-        $last_id = $crud->create($user);
-        unset($user->id_user);
+        $task = Task::arrayToUser($request);
+        $last_id = $crud->create($task);
+        unset($task->task_id);
         $response = [
-            "data" => [
-                'type' => "user",
-                'id' => $last_id,
-                'attributes' => $user
-            ]
+            "data" => $task,
+            'status' => 202
         ];
 
         // $user = (array) $user;
@@ -81,26 +79,20 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case 'PUT':
         $input = file_get_contents('php://input');
         $request = json_decode($input, true); // ottengo un array associativo
-        $user = User::arrayToUser($request);
-        $id_user = filter_input(INPUT_GET, 'id_user');
-        if (!is_null($id_user)) {
+        $task = Task::arrayToUser($request);
+        $task_id = filter_input(INPUT_GET, 'task_id');
+        if (!is_null($task_id)) {
 
-            $row = $crud->update($user);
-            unset($user->password);
-            unset($user->username);
+            $row = $crud->update($task);
 
             if ($row == 1 ) {
 
                 http_response_code(202);
 
                 $response = [
-                    "data" => [
-                        'type' => "user",
-                        'title' => "Utente aggiornato",
-                        'attributes' => $user
-                    ]
+                    "data" => $task,
+                    'status' => 202
                 ];
-                //echo json_encode($crud->read($id_user));
                 echo json_encode($response);
             } else if ($row == 0) {
 
@@ -110,8 +102,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     'errors' => [
                         [
                             'status' => 404,
-                            'title' => "Utente non trovato o già presente",
-                            'details' => $id_user
+                            'title' => "Task non trovata o già presente",
+                            'details' => $task_id
                         ]
                     ]
                 ];
