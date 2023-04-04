@@ -85,22 +85,22 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $id_user = filter_input(INPUT_GET, 'id_user');
         if (!is_null($id_user)) {
 
-            echo json_encode($crud->read($id_user));
-
             $row = $crud->update($user);
             unset($user->password);
             unset($user->username);
 
             if ($row == 1 ) {
 
-                http_response_code(204);
+                http_response_code(202);
 
                 $response = [
                     "data" => [
                         'type' => "user",
+                        'title' => "Utente aggiornato",
                         'attributes' => $user
                     ]
                 ];
+                //echo json_encode($crud->read($id_user));
                 echo json_encode($response);
             } else if ($row == 0) {
 
@@ -110,14 +110,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     'errors' => [
                         [
                             'status' => 404,
-                            'title' => "Utente non trovato",
+                            'title' => "Utente non trovato o già presente",
                             'details' => $id_user
                         ]
                     ]
                 ];
 
-                
-            }echo json_encode($response);
+                echo json_encode($response);
+            }
         }
         break;
 }
