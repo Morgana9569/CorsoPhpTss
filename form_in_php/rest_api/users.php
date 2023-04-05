@@ -45,7 +45,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     ]
                 ];
             }
-            echo json_encode($response);
+            echo json_encode($response,JSON_PRETTY_PRINT);
         }
         break;
 
@@ -55,27 +55,37 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $request = json_decode($input, true); // ottengo iun array associativo
 
         $user = User::arrayToUser($request);
-        $last_id = $crud->create($user);
-        unset($user->id_user);
-        $response = [
-            "data" => [
-                'type' => "user",
-                'id' => $last_id,
-                'attributes' => $user
-            ]
-        ];
+        try {
+            $last_id = $crud->create($user);
 
-        // $user = (array) $user;
-        // unset ($user ['password']);
 
-        // $user['id_user'] = $last_id;
-        // $response = [
-        //     "data" => $user,
-        //     'status' => 202
-        // ];
+            $user= (array) $user;
+            unset($user['password']);
+            $user['id_user'] = $last_id;
+            //unset($user->id_user);
 
-        echo json_encode($response);
+            $response = [
+                "data" => $user,
+                'status'=>202
+            ];
 
+            //echo json_encode($response,JSON_PRETTY_PRINT);
+
+        } catch (\Throwable $th) {
+            http_response_code(422);
+
+            $response = [
+                'errors' => [
+                    [
+                        'status' => 422,
+                        'title' => "formato non trovato",
+                        'details' => $th->getMessage(),
+                        'code' => $th->getCode()
+                    ]
+                ]
+            ];
+        }
+        echo json_encode($response,JSON_PRETTY_PRINT);
         break;
 
     case 'PUT':
@@ -89,7 +99,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             unset($user->password);
             unset($user->username);
 
-            if ($row == 1 ) {
+            if ($row == 1) {
 
                 http_response_code(202);
 
@@ -101,7 +111,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     ]
                 ];
                 //echo json_encode($crud->read($id_user));
-                echo json_encode($response);
+                echo json_encode($response,JSON_PRETTY_PRINT);
             } else if ($row == 0) {
 
                 http_response_code(404);
@@ -116,7 +126,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     ]
                 ];
 
-                echo json_encode($response);
+                echo json_encode($response,JSON_PRETTY_PRINT);
             }
         }
         break;
