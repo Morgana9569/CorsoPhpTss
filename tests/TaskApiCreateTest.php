@@ -2,14 +2,18 @@
 
 use PHPUnit\Framework\TestCase;
 
+//require_once "./config.php";
+
 class TaskApiCreateTest extends TestCase
 {
 
     public function test_create_user_api()
     {
+        //(new PDO(DB_DSN,DB_USER,DB_PASSWORD))->query("TRUNCATE TABLE user;");
+
         $payload = [
                 'id_user' => 27,
-                'name' => 'Comprare la panna',
+                'name' => 'Comprare i grissini',
                 'due_date' => '2023-04-4',
                 'done' => true,
         ];

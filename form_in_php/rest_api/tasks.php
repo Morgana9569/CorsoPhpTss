@@ -12,20 +12,19 @@ $crud = new TaskCRUD;
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-
         $task_id = filter_input(INPUT_GET, 'task_id');
-        if (!is_null($task_id)) {
-            echo json_encode($crud->read($task_id));
-        } else {
-            $task = $crud->read();
-            echo json_encode($task);
-        }
-
         $id_user = filter_input(INPUT_GET, 'id_user');
-        if (!is_null($task_id)) {
-            echo json_encode($crud->read($task_id));
-        }
         
+        if (!is_null($id_user)) {
+            $tasks = $crud->read($id_user);
+            echo json_encode($tasks);
+        } elseif (!is_null($task_id)) {
+            $task = $crud->read($task_id);
+            echo json_encode($task);
+        } else {
+            $tasks = $crud->read();
+            echo json_encode($tasks);
+        }
         break;
 
     case 'DELETE':

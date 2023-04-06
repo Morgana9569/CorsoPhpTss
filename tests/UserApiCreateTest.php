@@ -1,12 +1,15 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+//require_once "./config.php";
 
 class UserApiCreateTest extends TestCase
 {
 
     public function test_create_user_api()
     {
+        //(new PDO(DB_DSN,DB_USER,DB_PASSWORD))->query("TRUNCATE TABLE user;");
+
         $payload = [
             "first_name" => "Ciccio",
             "last_name" => "Pasticcio",
@@ -15,8 +18,8 @@ class UserApiCreateTest extends TestCase
             "id_regione" => 10,
             "id_provincia" => 15,
             "gender" => "M",
-            "username" => "SA@xcvxc", 
-            "password" => "Password", 
+            "username" => "SAss@xcvxc", 
+            "password" => "Password",
         ];
 
         $response = $this->post("http://localhost/corsoPhpTss/form_in_php/rest_api/users.php", $payload);

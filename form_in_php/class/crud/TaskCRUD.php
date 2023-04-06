@@ -46,14 +46,14 @@ class TaskCRUD
     }
 
     //leggo le informazioni su tutti gli utenti
-    public function read(int $task_id = null): Task|array|bool
+    public function read(int $id_user = null): Task|array|bool
     {
         $conn = new \PDO(DB_DSN, DB_USER, DB_PASSWORD);
-        if (!is_null($task_id)) {
+        if (!is_null($id_user)) {
             //variante del read passando user_id
-            $query = "SELECT * FROM task WHERE task_id = :task_id;";
+            $query = "SELECT * FROM task WHERE id_user = :id_user;";
             $stm =  $conn->prepare($query);
-            $stm->bindValue(':task_id', $task_id, PDO::PARAM_INT);
+            $stm->bindValue(':id_user', $id_user, PDO::PARAM_INT);
             //ATTENZIONE devo specificare fetch_class perchè altrimenti mi ripete
             //due volte le informazioni (di default è fetch both)
             //devo specificare il nome della classe: 'models\User'
@@ -64,9 +64,9 @@ class TaskCRUD
             if (count($result) == 1) {
                 return $result[0];
             }
-            if (count($result) > 1) {
-                throw new \Exception("Chiave primaria duplicata", 1);
-            }
+            // if (count($result) > 1) {
+            //     throw new \Exception("Chiave primaria duplicata", 1);
+            // }
             if (count($result) === 0) {
                 return false;
             }
@@ -78,9 +78,8 @@ class TaskCRUD
             if (count($result) === 0) {
                 return false;
             }
-            return $result;
-        }
-        //return $result;
+            
+        }return $result;
     }
 
 
