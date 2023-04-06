@@ -1,0 +1,57 @@
+.footer-bottom {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+.container {
+    position: fixed;
+    width: 100%;
+    margin-left: 10%;
+}
+a{
+    color:rgb(64, 85, 55);
+}
+
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    background-color: greenyellow;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.btn-cancella {
+    background-color: red;
+    color: black;
+    border-radius: 10px;
+}
+.btn-fatto {
+    background-color: greenyellow;
+    color: black;
+    border-radius: 10px;
+}
+
+.text-primary {
+color: rgb(64, 85, 55);
+border: 1px solid transparent;
+}
+
+body {
+    background-color: antiquewhite;
+}

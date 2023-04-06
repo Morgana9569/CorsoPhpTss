@@ -1,0 +1,11 @@
+.footer-bottom {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+.container {
+    margin-left: 0;
+}
+body{
+    padding-bottom: 10rem;
+}
