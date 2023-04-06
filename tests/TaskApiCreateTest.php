@@ -12,8 +12,8 @@ class TaskApiCreateTest extends TestCase
         //(new PDO(DB_DSN,DB_USER,DB_PASSWORD))->query("TRUNCATE TABLE user;");
 
         $payload = [
-                'id_user' => 27,
-                'name' => 'Comprare i grissini',
+                'id_user' => 9,
+                'name' => 'Comprare cibo gatti',
                 'due_date' => '2023-04-4',
                 'done' => true,
         ];
@@ -56,4 +56,5 @@ class TaskApiCreateTest extends TestCase
             return $response;
         }
     }
+
 }
