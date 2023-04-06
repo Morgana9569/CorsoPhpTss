@@ -10,7 +10,10 @@ export function getUser() {
             return response.json()
         })
         .then((json) => {
+            //dati disponibili
             console.log(json);
+
+            const lista = document.getElementById("lista_utenti")
         })
 
     
