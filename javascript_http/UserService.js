@@ -5,17 +5,22 @@ export function getUser() {
     console.log("ciao",base_url);
 
     const promise = fetch(base_url+"/users.php")
-    console.log("promessa di fetch", promise)
+    //console.log("promessa di fetch", promise)
         promise.then((response)=> {
             return response.json()
         })
         .then((json) => {
             //dati disponibili
-            console.log(json);
-
+            
             const lista = document.getElementById("lista_utenti")
+            const elenco = json.data.map((user)=>{
+                console.log("sono un utente",user)
+                return "<li>("+user.user_id+")"+user.first_name+"</li>"
+            }).join("\n")
+
+            lista.innerHTML = elenco
+            console.log(elenco)
         })
 
-    
 
 }
