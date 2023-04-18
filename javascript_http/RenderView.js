@@ -14,21 +14,22 @@ export function UserList(array_users, element_selector) {
 //UserTable() //function expression
 export const UserTable = (array_users, element_selector) => {
     //template literal
-    const html = `<table border="1">
+    const tr_users = array_users.map((user) => {
+        return `<tr>
+        <td>
+            ${user.first_name}
+        </td>
+    </tr>`
+    }).join("\n")
+
+    const html = `<table border="1" width="100%">
         <tr>
             <th>
                 Nome
             </th>
         </tr>`
         +
-        array_users.map((user) => {
-
-            return `<tr>
-            <td>
-                ${user.first_name}
-            </td>
-        </tr>`
-        }).join("\n")
+        tr_users
         +
         `</table >`
 

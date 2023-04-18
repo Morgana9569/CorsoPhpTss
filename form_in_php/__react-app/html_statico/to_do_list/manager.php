@@ -4,8 +4,8 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 	<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="stylesheet" href="css.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="css.css">
 </head>
 
 <body>
@@ -18,8 +18,10 @@
 
 			<div>
 				<i class="fa-solid fa-circle-user fa-2xl"></i>
+				</br></br>
+				<p class="name">Manager</p>
 			</div>
-			<br /><br />
+			<br />
 
 			<form method="POST" class="form-inline" action="add_query.php">
 				<input type="text" class="form-control" name="task" required /> <br /><br />
@@ -31,9 +33,9 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>#</th>
+					<th>Id_task</th>
 					<th>Task</th>
-					<th>Stato</th>
+					<th>Id_utente</th>
 					<th>Azioni</th>
 				</tr>
 			</thead>
@@ -46,12 +48,13 @@
 				?>
 					<tr>
 						<td><?php echo $count++ ?></td>
-						<td><?php echo $fetch['task'] ?></td>
-						<td><?php echo $fetch['stato'] ?></td>
+						<td><?php echo $fetch['name'] ?></td>
+						<td><?php echo $fetch['id_user'] ?></td>
+						<!-- <td><?php echo $fetch['done'] ?></td> -->
 						<td colspan="2">
 
 							<?php
-							if ($fetch['stato'] != "Fatto") {
+							if ($fetch['done'] != "Fatto") {
 								echo
 								'<a href="update_task.php?task_id=' . $fetch['task_id'] . '" class="btn btn-fatto"><span class="fa-solid fa-check"></span></a> |';
 							}

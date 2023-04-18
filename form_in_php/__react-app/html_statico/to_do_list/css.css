@@ -55,3 +55,8 @@ border: 1px solid transparent;
 body {
     background-color: antiquewhite;
 }
+
+.name {
+    font-size: 25px;
+    font-weight: bold;
+}
